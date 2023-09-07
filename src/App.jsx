@@ -14,7 +14,7 @@ function App() {
       <MyWelcome title="BENVENUTO!!!" subTitle="ehi tu che stai leggendo questa frase , ciao" />
       <BookList lista={libri} />
 
-      <SingleBook title={libri[0].title} image={libri[0].img} />
+
       <MyFooter />
     </>
   );

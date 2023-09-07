@@ -1,32 +1,27 @@
 import { Component } from "react";
+import SingleBook from "./SingleBook";
+import { Container, ListGroup, Row, Card, Offcanvas } from "react-bootstrap";
 
 class BookList extends Component {
-  filtra = (e) => {
-    e.preventDefault();
-    const ul = document.querySelector("ul");
-    const oggettiLista = document.querySelectorAll(".lista li");
-    const ricerca = document.querySelector("input").value.toLowerCase();
-    console.log(ricerca);
-    const listaFiltrata = oggettiLista.forEach((oggeto) => {
-      console.log(oggeto.innerText);
-      if (oggeto.innerText.toLowerCase().includes(ricerca)) {
-        oggeto.classList.remove("d-none");
-      } else {
-        oggeto.classList.add("d-none");
-      }
-    });
-    ul.append(listaFiltrata);
+  state = {
+    search: "",
+  };
+
+  filtra = (query) => {
+    this.setState({ search: query });
   };
   render() {
     return (
-      <>
-        <input type="text" onChange={(Event) => this.filtra(Event)} />
-        <ul className="lista">
-          {this.props.lista.map((book, index) => (
-            <li key={`book-${index}`}>{book.title}</li>
-          ))}
-        </ul>
-      </>
+      <Container>
+        <input type="text" onChange={(Event) => this.filtra(Event.target.value)} />
+        <Row className="lista">
+          {this.props.lista
+            .filter((book) => book.title.toLowerCase().includes(this.state.search.toLowerCase()))
+            .map((book, index) => (
+              <SingleBook key={`book-${index}`} title={book.title} image={book.img} />
+            ))}
+        </Row>
+      </Container>
     );
   }
 }
